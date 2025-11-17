@@ -20,8 +20,13 @@ public class ClientService {
     return nutriMapper.toClientDtoList(clientRepository.findAll());
   }
 
-  public ClientDto getClientById(int id) {
-    return null;
+  public ClientDto getClientById(Long id) {
+    var client =
+        clientRepository
+            .findById(id)
+            .orElseThrow(() -> new RuntimeException("Client not found with id: " + id));
+
+    return nutriMapper.toDto(client);
   }
 
   public ClientDto createClient(ClientDto clientDto) {

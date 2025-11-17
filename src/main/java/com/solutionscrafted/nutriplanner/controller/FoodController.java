@@ -22,9 +22,14 @@ public class FoodController {
     return ResponseEntity.ok(foodService.getFoods());
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<FoodDto> getFood(@PathVariable Long id) {
+    return ResponseEntity.ok(foodService.getFoodById(id));
+  }
+
   @PostMapping
   public ResponseEntity<FoodDto> createFood(@RequestBody FoodDto request) {
     var food = foodService.createFood(request);
-    return ResponseEntity.created(URI.create(String.format("/{%s}", food.id()))).body(food);
+    return ResponseEntity.created(URI.create(String.format("/foods/%s", food.id()))).body(food);
   }
 }
