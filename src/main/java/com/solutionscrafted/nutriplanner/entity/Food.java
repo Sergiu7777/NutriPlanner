@@ -14,26 +14,26 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Food {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String name;
+  @Column(nullable = false, unique = true)
+  private String name;
 
-    @Column(nullable = false)
-    private Double calories;
+  @Column(nullable = false)
+  private Double calories;
 
-    @Column(nullable = false)
-    private Double protein;
+  @Column(nullable = false)
+  private Double protein;
 
-    @Column(nullable = false)
-    private Double carbs;
+  @Column(nullable = false)
+  private Double carbs;
 
-    @Column(nullable = false)
-    private Double fat;
+  @Column(nullable = false)
+  private Double fat;
 
-    private String category;
+  private String category;
 
-    private String tags;
+  private String tags;
 }
