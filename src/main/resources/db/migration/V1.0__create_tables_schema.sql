@@ -1,4 +1,3 @@
-
 -- =============================================================
 -- TABLE: foods
 -- =============================================================
@@ -76,6 +75,7 @@ CREATE TABLE IF NOT EXISTS plan_recipes
 (
     id_plan   INTEGER NOT NULL,
     id_recipe INTEGER NOT NULL,
+    day       INTEGER NOT NULL,
     meal_time TEXT    NOT NULL CHECK (meal_time IN ('breakfast', 'lunch', 'dinner', 'snack')),
     PRIMARY KEY (id_plan, id_recipe, meal_time),
     FOREIGN KEY (id_plan) REFERENCES plans (id) ON DELETE CASCADE,

@@ -14,25 +14,21 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PlanRecipe {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_plan", nullable = false)
-    private Plan plan;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_plan", nullable = false)
+  private Plan plan;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_recipe", nullable = false)
-    private Recipe recipe;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_recipe", nullable = false)
+  private Recipe recipe;
 
-    @Column(nullable = false)
-    private String mealTime;
+  @Column(nullable = false)
+  private Integer day;
 
-//    @Column(nullable = false)
-//    private MealTimeEnum meal;
-//
-//    @Column(nullable = false)
-//    private LocalDateTime mealTime;
+  @Column(nullable = false)
+  private String mealTime;
 }
-

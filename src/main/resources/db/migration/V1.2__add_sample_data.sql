@@ -1,4 +1,3 @@
-
 -- Sample foods
 INSERT INTO foods (name, calories, protein, carbs, fat, category, tags)
 VALUES ('Chicken Breast', 165, 31, 0, 3.6, 'Protein', 'meat,lean'),
@@ -32,10 +31,10 @@ VALUES (1, datetime('now'), 1750),
 -- Recipe IDs correspond to entries in the `recipes` table
 
 -- Link plans to recipes
-INSERT INTO plan_recipes (id_plan, id_recipe, meal_time)
-VALUES (1, 1, 'breakfast'),
-       (1, 1, 'lunch'),
-       (2, 1, 'dinner');
+INSERT INTO plan_recipes (id_plan, id_recipe, day, meal_time)
+VALUES (1, 1, 1, 'breakfast'),
+       (1, 1, 2, 'lunch'),
+       (2, 1, 3, 'dinner');
 
 
 

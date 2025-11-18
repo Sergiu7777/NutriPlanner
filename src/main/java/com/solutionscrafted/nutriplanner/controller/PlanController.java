@@ -21,8 +21,8 @@ public class PlanController {
 
   @PostMapping("/generate")
   public ResponseEntity<Plan> generatePlan(
-      @RequestParam Long id_client, @RequestParam(required = false) String exclude_tag) {
-    return ResponseEntity.ok(planGeneratorService.generatePlan(id_client, exclude_tag));
+      @RequestParam("id_client") Long idClient, @RequestParam(value = "exclude_tag", required = false) String excludeTag) {
+    return ResponseEntity.ok(planGeneratorService.generatePlan(idClient, excludeTag));
   }
 
   @GetMapping("/{id_client}")
