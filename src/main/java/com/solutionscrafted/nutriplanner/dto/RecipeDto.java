@@ -8,5 +8,6 @@ public record RecipeDto(
     String name,
     String instructions,
     Double totalCalories,
-    String tags,
-    List<IngredientRecipe> ingredients) {}
+    String tags
+//    List<IngredientRecipeDto> ingredients
+) {}

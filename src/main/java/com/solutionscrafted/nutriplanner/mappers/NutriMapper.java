@@ -1,17 +1,10 @@
 package com.solutionscrafted.nutriplanner.mappers;
 
-import com.solutionscrafted.nutriplanner.dto.ClientDto;
-import com.solutionscrafted.nutriplanner.dto.FoodDto;
-import com.solutionscrafted.nutriplanner.dto.PlanDto;
-import com.solutionscrafted.nutriplanner.dto.RecipeDto;
-import com.solutionscrafted.nutriplanner.entity.Client;
-import com.solutionscrafted.nutriplanner.entity.Food;
-import com.solutionscrafted.nutriplanner.entity.Plan;
-import com.solutionscrafted.nutriplanner.entity.Recipe;
+import com.solutionscrafted.nutriplanner.dto.*;
+import com.solutionscrafted.nutriplanner.entity.*;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface NutriMapper {
@@ -32,6 +25,7 @@ public interface NutriMapper {
   List<FoodDto> toFoodDtoList(List<Food> foods);
 
   // Recipe mappers
+//  @Mapping(target = "ingredients", ignore = true)
   RecipeDto toDto(Recipe recipe);
 
   Recipe toRecipe(RecipeDto recipeDto);
@@ -45,4 +39,11 @@ public interface NutriMapper {
 
   //  @Named("toPlanDtoList")
   List<PlanDto> toPlanDtoList(List<Plan> plans);
+
+//  @Mapping(target = "recipeId", expression = "ingredientRecipe.recipeId")
+//  @Mapping(target = "foodId", expression = "ingredientRecipe.foodId")
+//  IngredientRecipeDto toIngredientsRecipeDto(IngredientRecipe ingredientRecipe);
+
+
+//  List<IngredientRecipeDto> toIngredientsRecipeDtoList(List<IngredientRecipe> ingredientRecipes);
 }

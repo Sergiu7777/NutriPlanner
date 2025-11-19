@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS recipes
     name           TEXT NOT NULL UNIQUE,
     instructions   TEXT NOT NULL, -- full recipe instructions
     total_calories REAL NOT NULL, -- computed total calories
-    tags           TEXT           -- comma-separated or JSON list of tags
+    tags           TEXT,          -- comma-separated or JSON list of tags
+    meal_time      TEXT           -- defining meal time (e.g., breakfast, lunch)
 );
 
 -- =============================================================
@@ -31,10 +32,10 @@ CREATE TABLE IF NOT EXISTS recipes
 -- =============================================================
 CREATE TABLE IF NOT EXISTS ingredients_recipe
 (
+    id        INTEGER PRIMARY KEY AUTOINCREMENT,
     id_recipe INTEGER NOT NULL,
     id_food   INTEGER NOT NULL,
     quantity  REAL    NOT NULL CHECK (quantity > 0), -- in grams or units
-    PRIMARY KEY (id_recipe, id_food),
     FOREIGN KEY (id_recipe) REFERENCES recipes (id) ON DELETE CASCADE,
     FOREIGN KEY (id_food) REFERENCES foods (id) ON DELETE CASCADE
 );
@@ -73,13 +74,23 @@ CREATE TABLE IF NOT EXISTS plans
 -- =============================================================
 CREATE TABLE IF NOT EXISTS plan_recipes
 (
+    id        INTEGER PRIMARY KEY AUTOINCREMENT,
     id_plan   INTEGER NOT NULL,
     id_recipe INTEGER NOT NULL,
     day       INTEGER NOT NULL,
     meal_time TEXT    NOT NULL CHECK (meal_time IN ('breakfast', 'lunch', 'dinner', 'snack')),
-    PRIMARY KEY (id_plan, id_recipe, meal_time),
     FOREIGN KEY (id_plan) REFERENCES plans (id) ON DELETE CASCADE,
     FOREIGN KEY (id_recipe) REFERENCES recipes (id) ON DELETE CASCADE
+);
+
+-- =============================================================
+-- TABLE: plan_activities
+-- Links meal plans with daily sport activity
+-- =============================================================
+CREATE TABLE IF NOT EXISTS plan_activities
+(
+    id       INTEGER PRIMARY KEY AUTOINCREMENT,
+    activity TEXT NOT NULL
 );
 
 -- =============================================================
