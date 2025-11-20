@@ -19,12 +19,12 @@ public class IngredientRecipe {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_recipe", nullable = false)
+    @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_food", nullable = false)
-    private Food food;
+    @JoinColumn(name = "food_id", nullable = false)
+    private Ingredient ingredient;
 
     @Column(nullable = false)
     private Double quantity;

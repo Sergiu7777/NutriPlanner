@@ -1,21 +1,15 @@
--- Sample foods
-INSERT INTO foods (name, calories, protein, carbs, fat, category, tags)
-VALUES ('Chicken Breast', 165, 31, 0, 3.6, 'Protein', 'meat,lean'),
-       ('Olive Oil', 884, 0, 0, 100, 'Fat', 'oil,healthy'),
-       ('Rice', 130, 2.7, 28, 0.3, 'Grain', 'starch,carb'),
-       ('Broccoli', 55, 3.7, 11, 0.6, 'Vegetable', 'green,healthy');
-
 -- Sample recipes
 INSERT INTO recipes (name, instructions, total_calories, tags)
-VALUES ('Grilled Chicken with Rice', 'Grill the chicken, cook rice, and serve with steamed broccoli.', 600,
+VALUES ('PANCAKES PROTEICE CU IAURT, FRUCTE SI SIROP LIGHT',
+        'Amestecă toate ingredientele pentru pancakes până obții un aluat omogen. Coace-le într-o tigaie antiaderentă, 2-3 minute pe fiecare parte (foc mic-mediu). Amestecă toppingul separat: cottage cheese + iaurt + sirop (poate fi sirop de curmale sau o lingurita de miere). Așează toppingul peste pancakes și adaugă fructele deasupra (zmeura, affine)',
+        600,
         'high-protein,meal-prep');
 
 -- Sample ingredients
-INSERT INTO ingredients_recipe (id_recipe, id_food, quantity)
-VALUES (1, 1, 150), -- 150g Chicken Breast
-       (1, 3, 100), -- 100g Rice
+INSERT INTO ingredients_recipe (recipe_id, ingredient_id, quantity)
+VALUES (1, 1, 150),
+       (1, 3, 100),
        (1, 4, 80);
--- 80g Broccoli
 
 -- Sample clients
 INSERT INTO clients (name, age, weight, height, goal, daily_calories)
@@ -23,15 +17,15 @@ VALUES ('Alice Johnson', 28, 60.5, 165, 'weight loss', 1800),
        ('Mark Rivera', 35, 78.2, 178, 'muscle gain', 2500);
 
 -- Sample meal plans
-INSERT INTO plans (id_client, date_created, total_calories)
-VALUES (1, datetime('now'), 1750),
-       (2, datetime('now'), 2450);
+INSERT INTO plans (id, title, total_calories, description, number_of_days, date_created, client_id)
+VALUES (1, "Plan test 1", 1750, "Un plan 1", 7, datetime('now'), 1),
+       (2, "Plan test 2", 2450, "Un plan 2", 14, datetime('now'), 2);
 
 -- Example recipes from previous migration assumed:
 -- Recipe IDs correspond to entries in the `recipes` table
 
 -- Link plans to recipes
-INSERT INTO plan_recipes (id_plan, id_recipe, day, meal_time)
+INSERT INTO plan_recipes (plan_id, recipe_id, day, meal_time)
 VALUES (1, 1, 1, 'breakfast'),
        (1, 1, 2, 'lunch'),
        (2, 1, 3, 'dinner');

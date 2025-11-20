@@ -1,13 +1,13 @@
 package com.solutionscrafted.nutriplanner.dto;
 
-import com.solutionscrafted.nutriplanner.entity.IngredientRecipe;
-import java.util.List;
+import lombok.Builder;
 
+@Builder
 public record RecipeDto(
-    Long id,
-    String name,
-    String instructions,
-    Double totalCalories,
-    String tags
-//    List<IngredientRecipeDto> ingredients
-) {}
+        Long id,
+        String name,
+        String instructions,
+        Double totalCalories,
+        String tags
+) {
+}

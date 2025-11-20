@@ -1,10 +1,26 @@
 -- =============================================================
--- TABLE: foods
+-- TABLE: plans
+-- Stores meal plans associated with each client
 -- =============================================================
-CREATE TABLE IF NOT EXISTS foods
+CREATE TABLE IF NOT EXISTS plans
+(
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    title          TEXT    NOT NULL,
+    total_calories INTEGER CHECK (total_calories > 0),
+    description    TEXT    NOT NULL,
+    number_of_days INTEGER CHECK (number_of_days > 0),
+    date_created   TEXT    NOT NULL DEFAULT (datetime('now')),
+    client_id      INTEGER NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE
+);
+
+-- =============================================================
+-- TABLE: ingredients
+-- =============================================================
+CREATE TABLE IF NOT EXISTS ingredients
 (
     id       INTEGER PRIMARY KEY AUTOINCREMENT,
-    name     TEXT NOT NULL UNIQUE,
+    name     TEXT NOT NULL,
     calories REAL NOT NULL, -- kcal per 100g
     protein  REAL NOT NULL, -- grams per 100g
     carbs    REAL NOT NULL, -- grams per 100g
@@ -32,12 +48,12 @@ CREATE TABLE IF NOT EXISTS recipes
 -- =============================================================
 CREATE TABLE IF NOT EXISTS ingredients_recipe
 (
-    id        INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_recipe INTEGER NOT NULL,
-    id_food   INTEGER NOT NULL,
-    quantity  REAL    NOT NULL CHECK (quantity > 0), -- in grams or units
-    FOREIGN KEY (id_recipe) REFERENCES recipes (id) ON DELETE CASCADE,
-    FOREIGN KEY (id_food) REFERENCES foods (id) ON DELETE CASCADE
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    recipe_id     INTEGER NOT NULL,
+    ingredient_id INTEGER NOT NULL,
+    quantity      REAL    NOT NULL CHECK (quantity > 0), -- in grams or units
+    FOREIGN KEY (recipe_id) REFERENCES recipes (id) ON DELETE CASCADE,
+    FOREIGN KEY (ingredient_id) REFERENCES ingredients (id) ON DELETE CASCADE
 );
 
 -- =============================================================
@@ -56,31 +72,18 @@ CREATE TABLE IF NOT EXISTS clients
 );
 
 -- =============================================================
--- TABLE: plans
--- Stores meal plans associated with each client
--- =============================================================
-CREATE TABLE IF NOT EXISTS plans
-(
-    id             INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_client      INTEGER NOT NULL,
-    date_created   TEXT    NOT NULL DEFAULT (datetime('now')),
-    total_calories REAL CHECK (total_calories >= 0),
-    FOREIGN KEY (id_client) REFERENCES clients (id) ON DELETE CASCADE
-);
-
--- =============================================================
 -- TABLE: plan_recipes
 -- Links meal plans with recipes, defining meal time (e.g., breakfast, lunch)
 -- =============================================================
 CREATE TABLE IF NOT EXISTS plan_recipes
 (
     id        INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_plan   INTEGER NOT NULL,
-    id_recipe INTEGER NOT NULL,
+    plan_id   INTEGER NOT NULL,
+    recipe_id INTEGER NOT NULL,
     day       INTEGER NOT NULL,
     meal_time TEXT    NOT NULL CHECK (meal_time IN ('breakfast', 'lunch', 'dinner', 'snack')),
-    FOREIGN KEY (id_plan) REFERENCES plans (id) ON DELETE CASCADE,
-    FOREIGN KEY (id_recipe) REFERENCES recipes (id) ON DELETE CASCADE
+    FOREIGN KEY (plan_id) REFERENCES plans (id) ON DELETE CASCADE,
+    FOREIGN KEY (recipe_id) REFERENCES recipes (id) ON DELETE CASCADE
 );
 
 -- =============================================================
@@ -94,13 +97,23 @@ CREATE TABLE IF NOT EXISTS plan_activities
 );
 
 -- =============================================================
+-- TABLE: notes
+-- Links meal plans with daily sport activity
+-- =============================================================
+CREATE TABLE IF NOT EXISTS notes
+(
+    id       INTEGER PRIMARY KEY AUTOINCREMENT,
+    activity TEXT NOT NULL
+);
+
+-- =============================================================
 -- INDEXES (for faster lookups)
 -- =============================================================
-CREATE INDEX IF NOT EXISTS idx_clients_name ON clients (name);
-CREATE INDEX IF NOT EXISTS idx_plans_client ON plans (id_client);
-CREATE INDEX IF NOT EXISTS idx_plan_recipes_plan ON plan_recipes (id_plan);
-CREATE INDEX IF NOT EXISTS idx_plan_recipes_recipe ON plan_recipes (id_recipe);
-CREATE INDEX IF NOT EXISTS idx_foods_category ON foods (category);
-CREATE INDEX IF NOT EXISTS idx_recipes_name ON recipes (name);
-CREATE INDEX IF NOT EXISTS idx_ingredients_recipe_recipe ON ingredients_recipe (id_recipe);
-CREATE INDEX IF NOT EXISTS idx_ingredients_recipe_food ON ingredients_recipe (id_food);
+-- CREATE INDEX IF NOT EXISTS idx_clients_name ON clients (name);
+-- CREATE INDEX IF NOT EXISTS idx_plans_client ON plans (id_client);
+-- CREATE INDEX IF NOT EXISTS idx_plan_recipes_plan ON plan_recipes (id_plan);
+-- CREATE INDEX IF NOT EXISTS idx_plan_recipes_recipe ON plan_recipes (id_recipe);
+-- CREATE INDEX IF NOT EXISTS idx_foods_category ON ingredients (category);
+-- CREATE INDEX IF NOT EXISTS idx_recipes_name ON recipes (name);
+-- CREATE INDEX IF NOT EXISTS idx_ingredients_recipe_recipe ON ingredients_recipe (id_recipe);
+-- CREATE INDEX IF NOT EXISTS idx_ingredients_recipe_food ON ingredients_recipe (id_food);

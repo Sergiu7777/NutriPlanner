@@ -1,5 +1,6 @@
 package com.solutionscrafted.nutriplanner.entity;
 
+import com.solutionscrafted.nutriplanner.entity.dayplan.DayPlan;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,21 +8,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "plan_activities")
+@Table(name = "notes")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SportActivity {
+public class Note {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String activity;
+    @OneToOne
+    private DayPlan dayPlan;
 
-    @ManyToOne
-    @JoinColumn(name = "plan_id")
-    private Plan plan;
+    private String description;
 }

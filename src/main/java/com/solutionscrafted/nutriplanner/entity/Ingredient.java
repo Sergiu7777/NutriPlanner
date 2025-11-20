@@ -6,15 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
-@Table(name = "recipes")
+@Table(name = "ingredients")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Recipe {
+public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,14 +21,19 @@ public class Recipe {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String instructions;
+    @Column(nullable = false)
+    private Double calories;
 
     @Column(nullable = false)
-    private Double totalCalories; //TODO: calculate calories
+    private Double protein;
+
+    @Column(nullable = false)
+    private Double carbs;
+
+    @Column(nullable = false)
+    private Double fat;
+
+    private String category;
 
     private String tags;
-
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<IngredientRecipe> ingredients;
 }

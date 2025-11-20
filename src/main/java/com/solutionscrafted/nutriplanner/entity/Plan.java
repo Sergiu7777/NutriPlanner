@@ -1,5 +1,6 @@
 package com.solutionscrafted.nutriplanner.entity;
 
+import com.solutionscrafted.nutriplanner.entity.dayplan.DayPlan;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,19 +22,22 @@ public class Plan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_client", nullable = false)
-    private Client client;
+    private String title;
+
+    private Integer totalCalories;
+
+    private String description;
+
+    private Integer numberOfDays;
 
     @Column(nullable = false)
     private LocalDateTime dateCreated = LocalDateTime.now();
 
-    private Double totalCalories;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
 
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PlanRecipe> planRecipes;
-
-    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SportActivity> planActivities;
+    private List<DayPlan> dayPlans;
 }
 
