@@ -1,10 +1,8 @@
 package com.solutionscrafted.nutriplanner.entity;
 
+import com.solutionscrafted.nutriplanner.entity.dayplan.MealTimeEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -27,10 +25,19 @@ public class Recipe {
     private String instructions;
 
     @Column(nullable = false)
-    private Double totalCalories; //TODO: calculate calories
+    private Integer totalCalories; //TODO: calculate calories
 
     private String tags;
 
+    //TODO: need for shuffle the recipes for each type of meal.
+    // Soup should not be available for breakfast!
+    // Split kcal intake 30% breakfast, 40% lunch, 25% dinner, 5% snack
+    @Enumerated(EnumType.STRING)
+    @Column(name = "meal_time", nullable = false)
+    private MealTimeEnum mealTime;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<IngredientRecipe> ingredients;
 }

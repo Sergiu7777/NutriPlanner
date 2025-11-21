@@ -1,9 +1,14 @@
 -- Sample recipes
-INSERT INTO recipes (name, instructions, total_calories, tags)
+INSERT INTO recipes (name, instructions, total_calories, tags, meal_time)
 VALUES ('PANCAKES PROTEICE CU IAURT, FRUCTE SI SIROP LIGHT',
         'Amestecă toate ingredientele pentru pancakes până obții un aluat omogen. Coace-le într-o tigaie antiaderentă, 2-3 minute pe fiecare parte (foc mic-mediu). Amestecă toppingul separat: cottage cheese + iaurt + sirop (poate fi sirop de curmale sau o lingurita de miere). Așează toppingul peste pancakes și adaugă fructele deasupra (zmeura, affine)',
         600,
-        'high-protein,meal-prep');
+        'high-protein,meal-prep',
+        'BREAKFAST'),
+       ('Orez cu pui', 'Fierbe orezul și prăjește pieptul de pui, apoi amestecă.', 520,
+        'proteic, echilibrat', 'LUNCH'),
+       ('Omletă cu legume', 'Bate ouăle, adaugă broccoli și ulei de măsline.', 340, 'vegetarian', 'LUNCH'),
+       ('Fulgi de ovăz cu fructe', 'Fierbe ovăzul și adaugă mere feliate.', 300, 'vegan', 'BREAKFAST');
 
 -- Sample ingredients
 INSERT INTO ingredients_recipe (recipe_id, ingredient_id, quantity)
@@ -29,6 +34,11 @@ INSERT INTO plan_recipes (plan_id, recipe_id, day, meal_time)
 VALUES (1, 1, 1, 'breakfast'),
        (1, 1, 2, 'lunch'),
        (2, 1, 3, 'dinner');
+
+INSERT INTO plan_activities (id, activity)
+VALUES (1, 'Alergare usoara 30 minute'),
+       (2, '100 burpees'),
+       (3, 'Tabata challenge');
 
 
 

@@ -1,10 +1,7 @@
 package com.solutionscrafted.nutriplanner.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -27,12 +24,14 @@ public class Client {
 
     private Double weight;
 
-    private Double height;
+    private Integer height;
 
     private String goal;
 
     private Double dailyCalories;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Plan> plans;
 }

@@ -2,11 +2,9 @@ package com.solutionscrafted.nutriplanner.mappers;
 
 import com.solutionscrafted.nutriplanner.dto.dayplan.DayPlanActivityDto;
 import com.solutionscrafted.nutriplanner.dto.dayplan.DayPlanDto;
-import com.solutionscrafted.nutriplanner.dto.dayplan.DayPlanNoteDto;
 import com.solutionscrafted.nutriplanner.dto.dayplan.DayPlanRecipeDto;
 import com.solutionscrafted.nutriplanner.entity.dayplan.DayPlan;
 import com.solutionscrafted.nutriplanner.entity.dayplan.DayPlanActivity;
-import com.solutionscrafted.nutriplanner.entity.dayplan.DayPlanNote;
 import com.solutionscrafted.nutriplanner.entity.dayplan.DayPlanRecipe;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -22,7 +20,7 @@ public interface DayPlanMapper {
     @Mapping(source = "plan.id", target = "planId")
     @Mapping(source = "recipes", target = "recipes")
     @Mapping(source = "activities", target = "activities")
-    @Mapping(source = "notes", target = "notes")
+    @Mapping(source = "note", target = "note")
     DayPlanDto toDto(DayPlan entity);
 
     @Mapping(source = "planId", target = "plan.id")
@@ -63,21 +61,4 @@ public interface DayPlanMapper {
     @Mapping(target = "activity", ignore = true)
         // set in service
     DayPlanActivity toEntity(DayPlanActivityDto dto);
-
-
-    // -----------------------------
-    // DayPlanNote
-    // -----------------------------
-    @Mapping(source = "id.dayPlanId", target = "dayPlanId")
-    @Mapping(source = "id.noteId", target = "noteId")
-    @Mapping(source = "note", target = "note")
-    DayPlanNoteDto toDto(DayPlanNote entity);
-
-    @Mapping(target = "id.dayPlanId", source = "dayPlanId")
-    @Mapping(target = "id.noteId", source = "noteId")
-    @Mapping(target = "dayPlan", ignore = true)   // set in service
-    @Mapping(target = "note", ignore = true)
-        // set in service
-    DayPlanNote toEntity(DayPlanNoteDto dto);
 }
-

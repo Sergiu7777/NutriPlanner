@@ -2,13 +2,10 @@ package com.solutionscrafted.nutriplanner.entity.dayplan;
 
 import com.solutionscrafted.nutriplanner.entity.Plan;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -25,18 +22,22 @@ public class DayPlan {
 
     private Integer day;
 
+    private String note;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", nullable = false)
     private Plan plan;
 
-
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "dayPlan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<DayPlanRecipe> recipes = new HashSet<>();
+    private List<DayPlanRecipe> recipes = new ArrayList<>();
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "dayPlan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<DayPlanActivity> activities = new HashSet<>();
-
-    @OneToMany(mappedBy = "dayPlan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<DayPlanNote> notes = new HashSet<>();
+    private List<DayPlanActivity> activities = new ArrayList<>();
 }
 

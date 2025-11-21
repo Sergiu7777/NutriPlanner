@@ -12,8 +12,8 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
-public interface NutriMapper {
+@Mapper(componentModel = "spring", uses = {DayPlanMapper.class})
+public interface NutriMapper { //TODO: refactor mapper, cleanup
 
     // Client mappers
     //  @Mapping(target = "plans", qualifiedByName = "toPlanDtoList")

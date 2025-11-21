@@ -1,8 +1,9 @@
 package com.solutionscrafted.nutriplanner.controller;
 
 import com.solutionscrafted.nutriplanner.dto.PlanDto;
+import com.solutionscrafted.nutriplanner.dto.PlanRequestDto;
 import com.solutionscrafted.nutriplanner.entity.Plan;
-import com.solutionscrafted.nutriplanner.service.PlanGeneratorService;
+import com.solutionscrafted.nutriplanner.service.PdfService;
 import com.solutionscrafted.nutriplanner.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -18,12 +19,16 @@ import java.util.List;
 public class PlanController {
 
     private final PlanService planService;
-    private final PlanGeneratorService planGeneratorService;
+    private final PdfService pdfService;
 
     @PostMapping("/generate")
-    public ResponseEntity<Plan> generatePlan(
-            @RequestParam("client_id") Long clientId, @RequestParam(value = "exclude_tag", required = false) String excludeTag) {
-        return ResponseEntity.ok(planGeneratorService.generatePlan(clientId, excludeTag));
+    public ResponseEntity<Plan> generatePlan(@RequestBody PlanRequestDto requestDto) {
+        return ResponseEntity.ok(planService.generatePlan(requestDto));
+    }
+
+    @PostMapping("/{plan_id}")
+    public ResponseEntity<PlanDto> updatePlan(@PathVariable("plan_id") Long planId, @RequestBody PlanRequestDto requestDto) {
+        return ResponseEntity.ok(planService.updatePlan(planId, requestDto));
     }
 
     @GetMapping("/{client_id}")
@@ -33,7 +38,8 @@ public class PlanController {
 
     @GetMapping("/{plan_id}/pdf")
     public ResponseEntity<byte[]> exportPlanAsPdf(@PathVariable("plan_id") Long planId) {
-        byte[] pdf = planGeneratorService.exportPlanAsPdf(planId);
+        byte[] pdf = pdfService.exportPlanAsPdf(planId);
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=plan-" + planId + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)

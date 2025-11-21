@@ -2,10 +2,7 @@ package com.solutionscrafted.nutriplanner.entity.dayplan;
 
 import com.solutionscrafted.nutriplanner.entity.Recipe;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "day_plan_recipe")
@@ -13,16 +10,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DayPlanRecipe {
+public class DayPlanRecipe { //TODO: need to refactor. Too many entities...
 
     @EmbeddedId
     private DayPlanRecipeId id;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("dayPlanId")
     @JoinColumn(name = "day_plan_id")
     private DayPlan dayPlan;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("recipeId")
     @JoinColumn(name = "recipe_id")

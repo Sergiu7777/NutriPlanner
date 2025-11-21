@@ -20,8 +20,4 @@ public class SportActivity {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String activity;
-
-    @ManyToOne
-    @JoinColumn(name = "plan_id")
-    private Plan plan;
 }

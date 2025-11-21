@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS day_plan
 (
     id      INTEGER PRIMARY KEY AUTOINCREMENT,
     day     INTEGER NOT NULL,
+    note    TEXT,
     plan_id INTEGER NOT NULL,
     CONSTRAINT fk_dayplan_plan FOREIGN KEY (plan_id) REFERENCES plans (id) ON DELETE CASCADE
 );
@@ -37,23 +38,9 @@ CREATE TABLE IF NOT EXISTS day_plan_activity
 );
 
 -- =============================================================
--- TABLE: day_plan_note
--- Many-to-many relation between day_plan and notes
--- =============================================================
-CREATE TABLE IF NOT EXISTS day_plan_note
-(
-    day_plan_id INTEGER NOT NULL,
-    note_id     INTEGER NOT NULL,
-    PRIMARY KEY (day_plan_id, note_id),
-    CONSTRAINT fk_dpn_dayplan FOREIGN KEY (day_plan_id) REFERENCES day_plan (id) ON DELETE CASCADE,
-    CONSTRAINT fk_dpn_note FOREIGN KEY (note_id) REFERENCES notes (id) ON DELETE CASCADE
-);
-
--- =============================================================
 -- OPTIONAL INDEXES
 -- =============================================================
 CREATE INDEX IF NOT EXISTS idx_day_plan_plan_id ON day_plan (plan_id);
 CREATE INDEX IF NOT EXISTS idx_dpr_mealtime ON day_plan_recipe (meal_time);
 CREATE INDEX IF NOT EXISTS idx_dpr_recipe ON day_plan_recipe (recipe_id);
 CREATE INDEX IF NOT EXISTS idx_dpa_activity ON day_plan_activity (activity_id);
-CREATE INDEX IF NOT EXISTS idx_dpn_note ON day_plan_note (note_id);

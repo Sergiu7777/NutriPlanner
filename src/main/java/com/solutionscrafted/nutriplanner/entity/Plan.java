@@ -2,10 +2,8 @@ package com.solutionscrafted.nutriplanner.entity;
 
 import com.solutionscrafted.nutriplanner.entity.dayplan.DayPlan;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,19 +22,24 @@ public class Plan {
 
     private String title;
 
-    private Integer totalCalories;
-
     private String description;
+
+    private Double totalCalories;
 
     private Integer numberOfDays;
 
+    @CreatedDate //TODO: add createdBy ?
     @Column(nullable = false)
     private LocalDateTime dateCreated = LocalDateTime.now();
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DayPlan> dayPlans;
 }

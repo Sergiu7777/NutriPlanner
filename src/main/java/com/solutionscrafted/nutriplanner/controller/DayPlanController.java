@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/plans/day")
 @RequiredArgsConstructor
-public class DayPlanController {
+public class DayPlanController { //TODO: check what's necessary here and refactor
 
     private final DayPlanService dayPlanService;
 
@@ -40,13 +40,6 @@ public class DayPlanController {
     public ResponseEntity<Void> addActivity(@PathVariable Long dayPlanId, @PathVariable Long activityId) {
 
         dayPlanService.addActivityToDay(dayPlanId, activityId);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/{dayPlanId}/note/{noteId}")
-    public ResponseEntity<Void> addNote(@PathVariable Long dayPlanId, @PathVariable Long noteId) {
-
-        dayPlanService.addNoteToDay(dayPlanId, noteId);
         return ResponseEntity.ok().build();
     }
 

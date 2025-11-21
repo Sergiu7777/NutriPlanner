@@ -1,10 +1,9 @@
 package com.solutionscrafted.nutriplanner.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "ingredients")
@@ -36,4 +35,9 @@ public class Ingredient {
     private String category;
 
     private String tags;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "ingredient", fetch = FetchType.LAZY)
+    private List<IngredientRecipe> ingredientRecipes;
 }

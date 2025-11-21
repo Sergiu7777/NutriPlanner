@@ -5,9 +5,7 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.solutionscrafted.nutriplanner.entity.Client;
 import com.solutionscrafted.nutriplanner.entity.Plan;
-import com.solutionscrafted.nutriplanner.entity.Recipe;
 import com.solutionscrafted.nutriplanner.repository.ClientRepository;
 import com.solutionscrafted.nutriplanner.repository.IngredientRepository;
 import com.solutionscrafted.nutriplanner.repository.PlanRepository;
@@ -19,62 +17,19 @@ import org.springframework.stereotype.Service;
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PlanGeneratorService {
+public class PdfService {
 
     private final IngredientRepository ingredientRepository;
     private final PlanRepository planRepository;
     private final RecipeRepository recipeRepository;
     private final ClientRepository clientRepository;
 
-    public Plan generatePlan(Long idClient, String excludeTag) {
-        // TODO- implement
-        Client client = clientRepository.findById(idClient).orElseThrow(() -> new RuntimeException("Client not found!"));
-
-        double target = client.getDailyCalories();
-        List<Recipe> candidates = recipeRepository.findAll().stream().filter(r -> !r.getTags().contains(excludeTag)).collect(Collectors.toList());
-
-        Collections.shuffle(candidates);
-
-        List<Recipe> recipes = new ArrayList<>();
-        int total = 0;
-
-        for (Recipe r : candidates) {
-            if (total + r.getTotalCalories() <= target + 100) {
-                recipes.add(r);
-                total += r.getTotalCalories();
-            }
-            if (recipes.size() == 3) break;
-        }
-
-        Plan plan = Plan.builder().client(client).dateCreated(LocalDateTime.now()).totalCalories(total).build();
-
-//        List<Day> planRecipes = new ArrayList<>();
-//        for (Recipe r : recipes) {
-//            PlanRecipe p = new PlanRecipe();
-//            p.setPlan(plan);
-//            p.setRecipe(r);
-//            p.setMealTime(
-//                    String.valueOf(r.getMealTime())); // TODO: add this in recipes and convert from string
-//
-//            planRecipes.add(p);
-//        }
-//
-//        plan.setDayPlans(planRecipes);
-
-        return planRepository.save(plan);
-    }
-
-    public byte[] exportPlanAsPdf(Long idPlan) {
-        Plan plan = planRepository.findById(idPlan).orElseThrow(() -> new RuntimeException("Plan not found"));
+    public byte[] exportPlanAsPdf(Long planId) {
+        Plan plan = planRepository.findById(planId).orElseThrow(() -> new RuntimeException("Plan not found"));
         var clientName = plan.getClient().getName();
         var calories = plan.getTotalCalories();
 

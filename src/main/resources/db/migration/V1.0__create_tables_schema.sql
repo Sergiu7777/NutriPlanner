@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS plans
 (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,
     title          TEXT    NOT NULL,
-    total_calories INTEGER CHECK (total_calories > 0),
+    total_calories REAL CHECK (total_calories > 0),
     description    TEXT    NOT NULL,
     number_of_days INTEGER CHECK (number_of_days > 0),
     date_created   TEXT    NOT NULL DEFAULT (datetime('now')),
@@ -91,16 +91,6 @@ CREATE TABLE IF NOT EXISTS plan_recipes
 -- Links meal plans with daily sport activity
 -- =============================================================
 CREATE TABLE IF NOT EXISTS plan_activities
-(
-    id       INTEGER PRIMARY KEY AUTOINCREMENT,
-    activity TEXT NOT NULL
-);
-
--- =============================================================
--- TABLE: notes
--- Links meal plans with daily sport activity
--- =============================================================
-CREATE TABLE IF NOT EXISTS notes
 (
     id       INTEGER PRIMARY KEY AUTOINCREMENT,
     activity TEXT NOT NULL

@@ -1,6 +1,5 @@
 package com.solutionscrafted.nutriplanner.service;
 
-import com.solutionscrafted.nutriplanner.entity.Note;
 import com.solutionscrafted.nutriplanner.entity.Plan;
 import com.solutionscrafted.nutriplanner.entity.Recipe;
 import com.solutionscrafted.nutriplanner.entity.SportActivity;
@@ -8,7 +7,6 @@ import com.solutionscrafted.nutriplanner.entity.dayplan.*;
 import com.solutionscrafted.nutriplanner.repository.PlanRepository;
 import com.solutionscrafted.nutriplanner.repository.RecipeRepository;
 import com.solutionscrafted.nutriplanner.repository.dayplan.DayPlanActivityRepository;
-import com.solutionscrafted.nutriplanner.repository.dayplan.DayPlanNoteRepository;
 import com.solutionscrafted.nutriplanner.repository.dayplan.DayPlanRecipeRepository;
 import com.solutionscrafted.nutriplanner.repository.dayplan.DayPlanRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +27,6 @@ public class DayPlanService {
     private final RecipeRepository recipeRepository;
     private final DayPlanRecipeRepository dayPlanRecipeRepository;
     private final DayPlanActivityRepository dayPlanActivityRepository;
-    private final DayPlanNoteRepository dayPlanNoteRepository;
 
     /**
      * Generate a full day plan structure (7-day or 14-day plan).
@@ -99,29 +96,6 @@ public class DayPlanService {
                 .build();
 
         dayPlanActivityRepository.save(dpa);
-    }
-
-    /**
-     * Add note to day.
-     */
-    @Transactional
-    public void addNoteToDay(Long dayPlanId, Long noteId) {
-
-        DayPlan dayPlan = dayPlanRepository.findById(dayPlanId)
-                .orElseThrow(() -> new RuntimeException("DayPlan not found"));
-
-        Note note = new Note();
-        note.setId(noteId);
-
-        DayPlanNoteId id = new DayPlanNoteId(dayPlanId, noteId);
-
-        DayPlanNote dpn = DayPlanNote.builder()
-                .id(id)
-                .dayPlan(dayPlan)
-                .note(note)
-                .build();
-
-        dayPlanNoteRepository.save(dpn);
     }
 
     /**
