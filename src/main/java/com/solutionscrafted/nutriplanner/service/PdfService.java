@@ -44,7 +44,7 @@ public class PdfService {
         String clientName = plan.getClient().getName();
         double calories = plan.getTotalCalories();
 
-        String formattedDate = plan.getDateCreated().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm"));
+        String formattedDate = plan.getDateCreated().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String filename = "Plan personalizat " + clientName + " " + formattedDate + ".pdf";
         log.info("FileName: {}", filename);
 

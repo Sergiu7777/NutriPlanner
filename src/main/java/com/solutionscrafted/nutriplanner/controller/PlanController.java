@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -23,25 +25,30 @@ public class PlanController {
 
     @PostMapping("/generate")
     public ResponseEntity<PlanDto> generatePlan(@RequestBody PlanRequestDto requestDto) {
+
         return ResponseEntity.ok(planService.generatePlan(requestDto));
     }
 
     @PostMapping("/{plan_id}")
     public ResponseEntity<PlanDto> updatePlan(@PathVariable("plan_id") Long planId, @RequestBody PlanRequestDto requestDto) {
+
         return ResponseEntity.ok(planService.updatePlan(planId, requestDto));
     }
 
     @GetMapping("/{client_id}")
     public ResponseEntity<List<PlanDto>> getPlansByClientId(@PathVariable("client_id") Long clientId) {
+
         return ResponseEntity.ok(planService.getPlansByClientId(clientId));
     }
 
     @GetMapping("/{plan_id}/pdf")
     public ResponseEntity<byte[]> exportPlanAsPdf(@PathVariable("plan_id") Long planId) {
+
         PdfResult pdf = pdfService.exportPlanAsPdf(planId);
+        String encodedFilename = URLEncoder.encode(pdf.filename(), StandardCharsets.UTF_8).replace("+", "%20");
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + pdf.filename())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + pdf.filename() + "\"; filename*=UTF-8''" + encodedFilename)
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdf.pdf());
     }
