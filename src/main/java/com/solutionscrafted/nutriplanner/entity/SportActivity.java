@@ -2,16 +2,14 @@ package com.solutionscrafted.nutriplanner.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "plan_activities")
+@Table(name = "sport_activities")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class SportActivity {
 
     @Id
@@ -19,5 +17,7 @@ public class SportActivity {
     private Long id;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String activity;
+    private String name;
+
+    private Integer duration;
 }

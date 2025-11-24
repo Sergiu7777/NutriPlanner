@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS day_plan_recipe
     day_plan_id INTEGER     NOT NULL,
     recipe_id   INTEGER     NOT NULL,
     meal_time   VARCHAR(50) NOT NULL, -- stores ENUM values: BREAKFAST, LUNCH, DINNER, SNACK
+    servings    REAL DEFAULT 1,       -- the number of servings per meal
     PRIMARY KEY (day_plan_id, recipe_id),
     CONSTRAINT fk_dpr_dayplan FOREIGN KEY (day_plan_id) REFERENCES day_plan (id) ON DELETE CASCADE,
     CONSTRAINT fk_dpr_recipe FOREIGN KEY (recipe_id) REFERENCES recipes (id) ON DELETE CASCADE
@@ -26,7 +27,7 @@ CREATE TABLE IF NOT EXISTS day_plan_recipe
 
 -- =============================================================
 -- TABLE: day_plan_activity
--- Many-to-many relation between day_plan and plan_activities
+-- Many-to-many relation between day_plan and sport_activities
 -- =============================================================
 CREATE TABLE IF NOT EXISTS day_plan_activity
 (
@@ -34,7 +35,7 @@ CREATE TABLE IF NOT EXISTS day_plan_activity
     activity_id INTEGER NOT NULL,
     PRIMARY KEY (day_plan_id, activity_id),
     CONSTRAINT fk_dpa_dayplan FOREIGN KEY (day_plan_id) REFERENCES day_plan (id) ON DELETE CASCADE,
-    CONSTRAINT fk_dpa_activity FOREIGN KEY (activity_id) REFERENCES plan_activities (id) ON DELETE CASCADE
+    CONSTRAINT fk_dpa_activity FOREIGN KEY (activity_id) REFERENCES sport_activities (id) ON DELETE CASCADE
 );
 
 -- =============================================================

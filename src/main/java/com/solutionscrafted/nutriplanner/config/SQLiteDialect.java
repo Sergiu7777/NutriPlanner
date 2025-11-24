@@ -59,11 +59,6 @@ public class SQLiteDialect extends Dialect {
     }
 
     @Override
-    public String getAddColumnString() {
-        return "add column";
-    }
-
-    @Override
     public String getForUpdateString() {
         return "";
     }
@@ -78,8 +73,4 @@ public class SQLiteDialect extends Dialect {
         return true;
     }
 
-    @Override
-    public boolean supportsCascadeDelete() {
-        return true;
-    }
 }

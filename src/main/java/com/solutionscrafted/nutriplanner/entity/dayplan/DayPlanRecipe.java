@@ -2,7 +2,10 @@ package com.solutionscrafted.nutriplanner.entity.dayplan;
 
 import com.solutionscrafted.nutriplanner.entity.Recipe;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "day_plan_recipe")
@@ -10,20 +13,20 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DayPlanRecipe { //TODO: need to refactor. Too many entities...
+public class DayPlanRecipe {
 
     @EmbeddedId
     private DayPlanRecipeId id;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    //    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("dayPlanId")
     @JoinColumn(name = "day_plan_id")
     private DayPlan dayPlan;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    //    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("recipeId")
     @JoinColumn(name = "recipe_id")
@@ -32,4 +35,6 @@ public class DayPlanRecipe { //TODO: need to refactor. Too many entities...
     @Enumerated(EnumType.STRING)
     @Column(name = "meal_time", nullable = false)
     private MealTimeEnum mealTime;
+
+    private Double servings;
 }

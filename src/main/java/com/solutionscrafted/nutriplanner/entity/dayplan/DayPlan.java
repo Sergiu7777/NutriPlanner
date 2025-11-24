@@ -13,7 +13,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class DayPlan {
 
     @Id
@@ -24,20 +23,36 @@ public class DayPlan {
 
     private String note;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    //    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", nullable = false)
     private Plan plan;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    //    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "dayPlan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DayPlanRecipe> recipes = new ArrayList<>();
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "dayPlan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DayPlanActivity> activities = new ArrayList<>();
+
+    public void setRecipes(List<DayPlanRecipe> recipes) {
+        this.recipes.clear();
+        if (recipes != null) {
+            this.recipes.addAll(recipes);
+        }
+    }
+
+    public void setActivities(List<DayPlanActivity> activities) {
+        this.activities.clear();
+        if (activities != null) {
+            this.activities.addAll(activities);
+        }
+    }
 }
 

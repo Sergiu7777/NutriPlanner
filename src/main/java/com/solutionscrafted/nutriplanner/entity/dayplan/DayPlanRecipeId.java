@@ -1,18 +1,23 @@
 package com.solutionscrafted.nutriplanner.entity.dayplan;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Embeddable
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class DayPlanRecipeId implements Serializable {
 
+    @Column(name = "day_plan_id")
     private Long dayPlanId;
+
+    @Column(name = "recipe_id")
     private Long recipeId;
 }

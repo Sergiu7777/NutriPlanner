@@ -2,17 +2,15 @@ package com.solutionscrafted.nutriplanner.entity.dayplan;
 
 import com.solutionscrafted.nutriplanner.entity.SportActivity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "day_plan_activity")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class DayPlanActivity {
 
     @EmbeddedId

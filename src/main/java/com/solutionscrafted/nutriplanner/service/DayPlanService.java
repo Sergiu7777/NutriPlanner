@@ -40,12 +40,11 @@ public class DayPlanService {
         List<DayPlan> dayPlans = new ArrayList<>();
 
         for (int day = 1; day <= days; day++) {
-            DayPlan dp = DayPlan.builder()
-                    .plan(plan)
-                    .day(day)
-                    .build();
+            DayPlan dayPlan = new DayPlan();
+            dayPlan.setDay(day);
+            dayPlan.setPlan(plan);
 
-            dayPlans.add(dp);
+            dayPlans.add(dayPlan);
         }
 
         return dayPlanRepository.saveAll(dayPlans);
@@ -88,12 +87,7 @@ public class DayPlanService {
         activity.setId(activityId);
 
         DayPlanActivityId id = new DayPlanActivityId(dayPlanId, activityId);
-
-        DayPlanActivity dpa = DayPlanActivity.builder()
-                .id(id)
-                .dayPlan(dayPlan)
-                .activity(activity)
-                .build();
+        DayPlanActivity dpa = new DayPlanActivity(id, dayPlan, activity);
 
         dayPlanActivityRepository.save(dpa);
     }

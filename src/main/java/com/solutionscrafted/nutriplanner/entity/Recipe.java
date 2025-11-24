@@ -29,7 +29,7 @@ public class Recipe {
 
     private String tags;
 
-    //TODO: need for shuffle the recipes for each type of meal.
+    // Shuffle the recipes for each type of meal.
     // Soup should not be available for breakfast!
     // Split kcal intake 30% breakfast, 40% lunch, 25% dinner, 5% snack
     @Enumerated(EnumType.STRING)

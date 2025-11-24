@@ -13,7 +13,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Plan {
 
     @Id
@@ -28,12 +27,12 @@ public class Plan {
 
     private Integer numberOfDays;
 
-    @CreatedDate //TODO: add createdBy ?
+    @CreatedDate
     @Column(nullable = false)
     private LocalDateTime dateCreated = LocalDateTime.now();
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    //    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;

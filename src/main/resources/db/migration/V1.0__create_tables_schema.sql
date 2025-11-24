@@ -87,13 +87,14 @@ CREATE TABLE IF NOT EXISTS plan_recipes
 );
 
 -- =============================================================
--- TABLE: plan_activities
+-- TABLE: sport_activities
 -- Links meal plans with daily sport activity
 -- =============================================================
-CREATE TABLE IF NOT EXISTS plan_activities
+CREATE TABLE IF NOT EXISTS sport_activities
 (
     id       INTEGER PRIMARY KEY AUTOINCREMENT,
-    activity TEXT NOT NULL
+    name     TEXT NOT NULL,     -- workout description
+    duration INTEGER DEFAULT 30 -- workout duration in minutes
 );
 
 -- =============================================================

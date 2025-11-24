@@ -2,7 +2,6 @@ package com.solutionscrafted.nutriplanner.controller;
 
 import com.solutionscrafted.nutriplanner.dto.PlanDto;
 import com.solutionscrafted.nutriplanner.dto.PlanRequestDto;
-import com.solutionscrafted.nutriplanner.entity.Plan;
 import com.solutionscrafted.nutriplanner.service.PdfService;
 import com.solutionscrafted.nutriplanner.service.PlanService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class PlanController {
     private final PdfService pdfService;
 
     @PostMapping("/generate")
-    public ResponseEntity<Plan> generatePlan(@RequestBody PlanRequestDto requestDto) {
+    public ResponseEntity<PlanDto> generatePlan(@RequestBody PlanRequestDto requestDto) {
         return ResponseEntity.ok(planService.generatePlan(requestDto));
     }
 

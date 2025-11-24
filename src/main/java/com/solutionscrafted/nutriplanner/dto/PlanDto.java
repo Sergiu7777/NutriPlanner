@@ -1,10 +1,10 @@
 package com.solutionscrafted.nutriplanner.dto;
 
-import lombok.Builder;
+import com.solutionscrafted.nutriplanner.dto.dayplan.DayPlanDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Builder
 public record PlanDto(
         Long id,
         String title,
@@ -12,6 +12,6 @@ public record PlanDto(
         Double totalCalories,
         Integer numberOfDays,
         Integer clientId,
-        String excludeTag,
-        LocalDateTime dateCreated) {
+        LocalDateTime dateCreated,
+        List<DayPlanDto> dayPlanDtoList) {
 }

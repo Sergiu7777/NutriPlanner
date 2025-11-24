@@ -1,17 +1,12 @@
 package com.solutionscrafted.nutriplanner.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class SportActivityDto {
-    private Long id;
-    private String name;
-    private Integer duration;
+public record SportActivityDto(
+        Long id,
+        String name,
+        Integer duration
+) {
 }
 

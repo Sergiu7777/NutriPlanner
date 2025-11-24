@@ -35,10 +35,10 @@ VALUES (1, 1, 1, 'breakfast'),
        (1, 1, 2, 'lunch'),
        (2, 1, 3, 'dinner');
 
-INSERT INTO plan_activities (id, activity)
-VALUES (1, 'Alergare usoara 30 minute'),
-       (2, '100 burpees'),
-       (3, 'Tabata challenge');
+INSERT INTO sport_activities (id, name, duration)
+VALUES (1, 'Alergare usoara, puls mediu 150 bpm', 30),
+       (2, '100 burpees, 5 seturi x 20', 20),
+       (3, 'Tabata challenge, 3 runde: flotari, genoflexiuni, sprinturi.', 30);
 
 
 
