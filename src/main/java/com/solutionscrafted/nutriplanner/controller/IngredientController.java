@@ -19,7 +19,7 @@ public class IngredientController {
     private final IngredientService ingredientService;
 
     @GetMapping
-    public ResponseEntity<List<IngredientDto>> getIngredients() {
+    public ResponseEntity<List<IngredientDto>> getIngredients() { //TODO: add pagination for ingredients
         return ResponseEntity.ok(ingredientService.getIngredients());
     }
 

@@ -7,7 +7,7 @@ VALUES ('PANCAKES PROTEICE CU IAURT, FRUCTE SI SIROP LIGHT',
         'BREAKFAST'),
        ('Orez cu pui', 'Fierbe orezul și prăjește pieptul de pui, apoi amestecă.', 520,
         'proteic, echilibrat', 'LUNCH'),
-       ('Omletă cu legume', 'Bate ouăle, adaugă broccoli și ulei de măsline.', 340, 'vegetarian', 'LUNCH'),
+       ('Omletă cu legume', 'Bate ouăle, adaugă broccoli și ulei de măsline.', 340, 'vegetarian', 'DINNER'),
        ('Fulgi de ovăz cu fructe', 'Fierbe ovăzul și adaugă mere feliate.', 300, 'vegan', 'BREAKFAST');
 
 -- Sample ingredients
