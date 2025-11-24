@@ -1,9 +1,9 @@
 package com.solutionscrafted.nutriplanner.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.solutionscrafted.nutriplanner.entity.dayplan.DayPlan;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,8 +27,8 @@ public class Plan {
 
     private Integer numberOfDays;
 
-    @CreatedDate
-    @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "date_created")
     private LocalDateTime dateCreated = LocalDateTime.now();
 
     //    @ToString.Exclude

@@ -1,5 +1,6 @@
 package com.solutionscrafted.nutriplanner.controller;
 
+import com.solutionscrafted.nutriplanner.dto.PdfResult;
 import com.solutionscrafted.nutriplanner.dto.PlanDto;
 import com.solutionscrafted.nutriplanner.dto.PlanRequestDto;
 import com.solutionscrafted.nutriplanner.service.PdfService;
@@ -37,11 +38,11 @@ public class PlanController {
 
     @GetMapping("/{plan_id}/pdf")
     public ResponseEntity<byte[]> exportPlanAsPdf(@PathVariable("plan_id") Long planId) {
-        byte[] pdf = pdfService.exportPlanAsPdf(planId);
+        PdfResult pdf = pdfService.exportPlanAsPdf(planId);
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=plan-" + planId + ".pdf")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + pdf.filename())
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(pdf);
+                .body(pdf.pdf());
     }
 }

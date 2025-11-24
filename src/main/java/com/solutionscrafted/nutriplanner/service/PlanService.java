@@ -122,6 +122,13 @@ public class PlanService {
         dayPlanRecipes.addAll(dinnerRecipes);
         dayPlanRecipes.addAll(snackRecipes);
 
+        log.info("DayPlanRecipes: {}", dayPlanRecipes);
+
+        adjustServingsToHitTarget(dayPlanRecipes, target);
+
+        // TODO: 1160 vs 2000 is too big difference - investigate - it's because of not much sample data in DB
+        log.info("Total daily calories: {}, Requested daily intake: {}.", dayPlanRecipes.stream().mapToDouble(dpr -> dpr.getRecipe().getTotalCalories()).sum(), target);
+
         dayPlanRecipes.forEach(dpr -> {
             dpr.setDayPlan(dayPlan);
             dayPlan.getRecipes().add(dpr);
@@ -135,6 +142,7 @@ public class PlanService {
         Collections.shuffle(candidates);
 
         double target = getCaloriesPerMealTime(totalCalories, mealTime);
+        log.info("Meal: {}, Intake: {}%, TargetIntake: {}, Total: {}", mealTime.getMeal(), mealTime.getIntake(), target, totalCalories);
 
         List<Recipe> recipes = new ArrayList<>();
         int total = 0;
@@ -155,7 +163,6 @@ public class PlanService {
                         .servings(1.0) //TODO: sent servings in request - improvement
                         .build())
                 .toList();
-        log.info("DayPlanRecipes: {}", dayPlanRecipes);
 
         return dayPlanRecipeRepository.saveAll(dayPlanRecipes);
     }
@@ -166,4 +173,22 @@ public class PlanService {
         // intake represents the proportion of the total kcal per day for a specific meal, ex. breakfast is 35% of daily kcal intake.
         return totalCalories * intake / 100;
     }
+
+    //TODO: update servings
+    private void adjustServingsToHitTarget(List<DayPlanRecipe> dayPlanRecipes, double targetCalories) {
+
+        double currentTotal = dayPlanRecipes.stream()
+                .mapToDouble(dpr -> dpr.getRecipe().getTotalCalories())
+                .sum();
+
+        if (currentTotal == 0) {
+            return; // nothing to adjust
+        }
+
+        double scale = targetCalories / currentTotal;
+
+        // scale servings — default is assumed 1.0
+        dayPlanRecipes.forEach(dpr -> dpr.setServings(scale));
+    }
+
 }
