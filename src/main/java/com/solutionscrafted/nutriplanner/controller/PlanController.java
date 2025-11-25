@@ -1,8 +1,8 @@
 package com.solutionscrafted.nutriplanner.controller;
 
+import com.solutionscrafted.nutriplanner.controller.requestbody.PlanRequestDto;
 import com.solutionscrafted.nutriplanner.dto.PdfResult;
 import com.solutionscrafted.nutriplanner.dto.PlanDto;
-import com.solutionscrafted.nutriplanner.controller.requestbody.PlanRequestDto;
 import com.solutionscrafted.nutriplanner.service.PdfService;
 import com.solutionscrafted.nutriplanner.service.PlanService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +25,13 @@ public class PlanController {
     private final PlanService planService;
     private final PdfService pdfService;
 
+    @GetMapping
+    public ResponseEntity<List<PlanDto>> getPlans() {
+        log.info("Get plans request: /plans.");
+
+        return ResponseEntity.ok(planService.getAllPlans());
+    }
+
     @PostMapping("/generate")
     public ResponseEntity<PlanDto> generatePlan(@RequestBody PlanRequestDto requestDto) {
         log.info("Create plan for client request: /plans/generate. Body: {}.", requestDto);
@@ -37,6 +44,15 @@ public class PlanController {
         log.info("Update plan for client request: /plans/{}. Body: {}.", planId, requestDto);
 
         return ResponseEntity.ok(planService.updatePlan(planId, requestDto));
+    }
+
+    @DeleteMapping("/{plan_id}")
+    public ResponseEntity<Void> deletePlan(@PathVariable("plan_id") Long planId) {
+        log.info("Delete plan request: /plans/{}.", planId);
+
+        planService.deletePlan(planId);
+
+        return ResponseEntity.accepted().build();
     }
 
     @GetMapping("/{client_id}")

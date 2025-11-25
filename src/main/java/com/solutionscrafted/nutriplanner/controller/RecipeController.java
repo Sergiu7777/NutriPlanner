@@ -48,4 +48,13 @@ public class RecipeController {
 
         return ResponseEntity.ok(recipeService.updateRecipe(recipeId, requestDto));
     }
+
+    @DeleteMapping("/{recipe_id}")
+    public ResponseEntity<Void> deleteRecipe(@PathVariable("recipe_id") Long recipeId) {
+        log.info("Delete recipe request: /recipes/{}.", recipeId);
+
+        recipeService.deleteRecipe(recipeId);
+
+        return ResponseEntity.accepted().build();
+    }
 }

@@ -1,7 +1,7 @@
 package com.solutionscrafted.nutriplanner.service;
 
-import com.solutionscrafted.nutriplanner.dto.PlanDto;
 import com.solutionscrafted.nutriplanner.controller.requestbody.PlanRequestDto;
+import com.solutionscrafted.nutriplanner.dto.PlanDto;
 import com.solutionscrafted.nutriplanner.entity.Client;
 import com.solutionscrafted.nutriplanner.entity.Plan;
 import com.solutionscrafted.nutriplanner.entity.Recipe;
@@ -37,6 +37,10 @@ public class PlanService {
     private final DayPlanRecipeRepository dayPlanRecipeRepository;
     private final PlanMapper planMapper;
 
+    public List<PlanDto> getAllPlans() {
+        return planMapper.toPlanDtoList(planRepository.findAll());
+    }
+
     public List<PlanDto> getPlansByClientId(Long id) {
         return planMapper.toPlanDtoList(planRepository.findByClient_Id(id));
     }
@@ -51,6 +55,14 @@ public class PlanService {
 
         Plan updated = planRepository.save(plan);
         return planMapper.toPlanDto(updated);
+    }
+
+    public void deletePlan(Long id) {
+        log.info("Deleting plan for planId: {}.", id);
+
+        planRepository.findById(id).ifPresentOrElse(planRepository::delete, () -> {
+            log.warn("Plan not found with id: {}", id);
+        });
     }
 
     public PlanDto generatePlan(PlanRequestDto requestDto) {

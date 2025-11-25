@@ -15,7 +15,7 @@ public record ClientRequestDto(
         Double weight,
         @NotNull(message = "Height is required")
         @Positive(message = "Height must be a non-negative value")
-        Double height,
+        Integer height,
         @NotBlank(message = "Goal is required") String goal,
         @NotNull(message = "Daily calorie intake is required") Double dailyCalories) {
 }

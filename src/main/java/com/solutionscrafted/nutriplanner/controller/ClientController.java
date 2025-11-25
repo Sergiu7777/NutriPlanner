@@ -1,7 +1,7 @@
 package com.solutionscrafted.nutriplanner.controller;
 
-import com.solutionscrafted.nutriplanner.dto.ClientDto;
 import com.solutionscrafted.nutriplanner.controller.requestbody.ClientRequestDto;
+import com.solutionscrafted.nutriplanner.dto.ClientDto;
 import com.solutionscrafted.nutriplanner.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,5 +40,21 @@ public class ClientController {
         var client = clientService.createClient(request);
         return ResponseEntity.created(URI.create(String.format("/clients/%s", client.id())))
                 .body(client);
+    }
+
+    @PostMapping("/{client_id}")
+    public ResponseEntity<ClientDto> updateClient(@PathVariable("client_id") Long clientId, @RequestBody ClientRequestDto requestDto) {
+        log.info("Update client request: /clients/{}. Body: {}.", clientId, requestDto);
+
+        return ResponseEntity.ok(clientService.updateClient(clientId, requestDto));
+    }
+
+    @DeleteMapping("/{client_id}")
+    public ResponseEntity<Void> deleteClient(@PathVariable("client_id") Long clientId) {
+        log.info("Delete client request: /clients/{}.", clientId);
+
+        clientService.deleteClient(clientId);
+
+        return ResponseEntity.accepted().build();
     }
 }

@@ -47,4 +47,12 @@ public class RecipeService {
 
         return mapper.toRecipeDto(recipe);
     }
+
+    public void deleteRecipe(Long id) {
+        log.info("Deleting recipe for recipeId: {}.", id);
+
+        recipeRepository.findById(id).ifPresentOrElse(recipeRepository::delete, () -> {
+            log.warn("Recipe not found with id: {}", id);
+        });
+    }
 }
