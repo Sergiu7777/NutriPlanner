@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/plans/day")
 @RequiredArgsConstructor
-public class DayPlanController { //TODO: check what's necessary here and refactor
+public class DayPlanController {
 
     private final DayPlanService dayPlanService;
 

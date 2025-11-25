@@ -5,9 +5,10 @@ import com.solutionscrafted.nutriplanner.mappers.IngredientMapper;
 import com.solutionscrafted.nutriplanner.repository.IngredientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -16,8 +17,12 @@ public class IngredientService {
     private final IngredientRepository ingredientRepository;
     private final IngredientMapper mapper;
 
-    public List<IngredientDto> getIngredients() {
-        return mapper.toIngredientDtoList(ingredientRepository.findAll());
+    public Page<IngredientDto> getIngredients(Pageable pageable) {
+        var ingredientPage = ingredientRepository.findAll(pageable);
+
+        var dtoList = mapper.toIngredientDtoList(ingredientPage.getContent());
+
+        return new PageImpl<>(dtoList, pageable, ingredientPage.getTotalElements());
     }
 
     public IngredientDto getIngredientById(Long id) {

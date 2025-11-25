@@ -18,15 +18,11 @@ public class DayPlanRecipe {
     @EmbeddedId
     private DayPlanRecipeId id;
 
-    //    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("dayPlanId")
     @JoinColumn(name = "day_plan_id")
     private DayPlan dayPlan;
 
-    //    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("recipeId")
     @JoinColumn(name = "recipe_id")

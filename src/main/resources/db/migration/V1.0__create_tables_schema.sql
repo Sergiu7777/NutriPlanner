@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS ingredients
 CREATE TABLE IF NOT EXISTS recipes
 (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,
-    name           TEXT NOT NULL UNIQUE,
+    name           TEXT NOT NULL, -- recipe name
     instructions   TEXT NOT NULL, -- full recipe instructions
     total_calories REAL NOT NULL, -- computed total calories
     tags           TEXT,          -- comma-separated or JSON list of tags
@@ -100,11 +100,11 @@ CREATE TABLE IF NOT EXISTS sport_activities
 -- =============================================================
 -- INDEXES (for faster lookups)
 -- =============================================================
--- CREATE INDEX IF NOT EXISTS idx_clients_name ON clients (name);
--- CREATE INDEX IF NOT EXISTS idx_plans_client ON plans (id_client);
--- CREATE INDEX IF NOT EXISTS idx_plan_recipes_plan ON plan_recipes (id_plan);
--- CREATE INDEX IF NOT EXISTS idx_plan_recipes_recipe ON plan_recipes (id_recipe);
--- CREATE INDEX IF NOT EXISTS idx_foods_category ON ingredients (category);
--- CREATE INDEX IF NOT EXISTS idx_recipes_name ON recipes (name);
--- CREATE INDEX IF NOT EXISTS idx_ingredients_recipe_recipe ON ingredients_recipe (id_recipe);
--- CREATE INDEX IF NOT EXISTS idx_ingredients_recipe_food ON ingredients_recipe (id_food);
+CREATE INDEX IF NOT EXISTS idx_clients_name ON clients (name);
+CREATE INDEX IF NOT EXISTS idx_plans_client ON plans (client_id);
+CREATE INDEX IF NOT EXISTS idx_plan_recipes_plan ON plan_recipes (plan_id);
+CREATE INDEX IF NOT EXISTS idx_plan_recipes_recipe ON plan_recipes (recipe_id);
+CREATE INDEX IF NOT EXISTS idx_foods_category ON ingredients (category);
+CREATE INDEX IF NOT EXISTS idx_recipes_name ON recipes (name);
+CREATE INDEX IF NOT EXISTS idx_ingredients_recipe_recipe ON ingredients_recipe (recipe_id);
+CREATE INDEX IF NOT EXISTS idx_ingredients_recipe_ingredient ON ingredients_recipe (ingredient_id);

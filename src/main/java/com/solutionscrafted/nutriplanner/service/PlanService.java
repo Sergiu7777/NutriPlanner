@@ -42,9 +42,15 @@ public class PlanService {
     }
 
     public PlanDto updatePlan(Long id, PlanRequestDto requestDto) {
-        //TODO: implement
         Plan plan = planRepository.findById(id).orElseThrow(() -> new RuntimeException("Plan not found for id: " + id));
-        return planMapper.toPlanDto(plan);
+
+        plan.setTitle(requestDto.title());
+        plan.setDescription(requestDto.description());
+        plan.setTotalCalories(requestDto.totalCalories());
+        plan.setNumberOfDays(requestDto.numberOfDays());
+
+        Plan updated = planRepository.save(plan);
+        return planMapper.toPlanDto(updated);
     }
 
     public PlanDto generatePlan(PlanRequestDto requestDto) {
