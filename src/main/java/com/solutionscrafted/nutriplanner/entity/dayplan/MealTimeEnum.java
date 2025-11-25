@@ -16,5 +16,4 @@ public enum MealTimeEnum {
         this.meal = meal;
         this.intake = intake;
     }
-
 }

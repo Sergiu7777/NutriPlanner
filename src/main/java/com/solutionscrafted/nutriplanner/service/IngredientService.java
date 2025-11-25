@@ -1,6 +1,7 @@
 package com.solutionscrafted.nutriplanner.service;
 
 import com.solutionscrafted.nutriplanner.dto.IngredientDto;
+import com.solutionscrafted.nutriplanner.dto.IngredientRequestDto;
 import com.solutionscrafted.nutriplanner.mappers.IngredientMapper;
 import com.solutionscrafted.nutriplanner.repository.IngredientRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,8 @@ public class IngredientService {
         return mapper.toIngredientDto(ingredient);
     }
 
-    public IngredientDto createIngredient(IngredientDto ingredientDto) {
-        var ingredient = ingredientRepository.saveAndFlush(mapper.toIngredient(ingredientDto));
+    public IngredientDto createIngredient(IngredientRequestDto requestDto) {
+        var ingredient = ingredientRepository.saveAndFlush(mapper.toIngredient(requestDto));
 
         return mapper.toIngredientDto(ingredient);
     }

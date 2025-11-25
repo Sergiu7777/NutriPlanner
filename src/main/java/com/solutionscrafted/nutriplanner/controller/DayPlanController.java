@@ -15,22 +15,25 @@ import java.util.List;
 @RequestMapping("/plans/day")
 @RequiredArgsConstructor
 public class DayPlanController {
-
     private final DayPlanService dayPlanService;
 
     @PostMapping("/{planId}/generate")
     public ResponseEntity<List<DayPlan>> generateDayPlans(@PathVariable Long planId, @RequestParam(defaultValue = "7") int days) {
+        log.info("Generate plan days request: /plans/day/{}/generate.", days);
 
         return ResponseEntity.ok(dayPlanService.generateDayPlans(planId, days));
     }
 
     @GetMapping("/{planId}")
-    public ResponseEntity<List<DayPlan>> getDayPlans(@PathVariable Long planId) {
+    public ResponseEntity<List<DayPlan>> getPlanDays(@PathVariable Long planId) {
+        log.info("Get days from plan request: /plans/day/{}.", planId);
+
         return ResponseEntity.ok(dayPlanService.getDayPlansByPlan(planId));
     }
 
     @PostMapping("/{dayPlanId}/recipe/{recipeId}")
     public ResponseEntity<Void> addRecipe(@PathVariable Long dayPlanId, @PathVariable Long recipeId, @RequestParam MealTimeEnum mealTime) {
+        log.info("Add recipe for a specific day plan: /plans/day/{}/recipe/{}.", dayPlanId, recipeId);
 
         dayPlanService.addRecipeToDay(dayPlanId, recipeId, mealTime);
         return ResponseEntity.ok().build();
@@ -38,6 +41,7 @@ public class DayPlanController {
 
     @PostMapping("/{dayPlanId}/activity/{activityId}")
     public ResponseEntity<Void> addActivity(@PathVariable Long dayPlanId, @PathVariable Long activityId) {
+        log.info("Add activity for day in plan: /plans/day/{}/activity/{}.", dayPlanId, activityId);
 
         dayPlanService.addActivityToDay(dayPlanId, activityId);
         return ResponseEntity.ok().build();
@@ -45,6 +49,8 @@ public class DayPlanController {
 
     @DeleteMapping("/{dayPlanId}")
     public ResponseEntity<Void> deleteDayPlan(@PathVariable Long dayPlanId) {
+        log.info("Delete day plan: /plans/day/{}.", dayPlanId);
+
         dayPlanService.deleteDayPlan(dayPlanId);
         return ResponseEntity.noContent().build();
     }

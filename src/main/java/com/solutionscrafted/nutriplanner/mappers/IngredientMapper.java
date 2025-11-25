@@ -1,6 +1,7 @@
 package com.solutionscrafted.nutriplanner.mappers;
 
 import com.solutionscrafted.nutriplanner.dto.IngredientDto;
+import com.solutionscrafted.nutriplanner.dto.IngredientRequestDto;
 import com.solutionscrafted.nutriplanner.entity.Ingredient;
 import org.mapstruct.Mapper;
 
@@ -12,6 +13,8 @@ public interface IngredientMapper {
     IngredientDto toIngredientDto(Ingredient ingredient);
 
     Ingredient toIngredient(IngredientDto ingredientDto);
+
+    Ingredient toIngredient(IngredientRequestDto requestDto);
 
     List<IngredientDto> toIngredientDtoList(List<Ingredient> ingredients);
 }
