@@ -1,7 +1,7 @@
 package com.solutionscrafted.nutriplanner.service;
 
 import com.solutionscrafted.nutriplanner.dto.PlanDto;
-import com.solutionscrafted.nutriplanner.dto.PlanRequestDto;
+import com.solutionscrafted.nutriplanner.controller.requestbody.PlanRequestDto;
 import com.solutionscrafted.nutriplanner.entity.Client;
 import com.solutionscrafted.nutriplanner.entity.Plan;
 import com.solutionscrafted.nutriplanner.entity.Recipe;

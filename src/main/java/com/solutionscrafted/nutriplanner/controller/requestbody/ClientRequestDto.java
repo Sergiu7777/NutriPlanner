@@ -1,4 +1,4 @@
-package com.solutionscrafted.nutriplanner.dto;
+package com.solutionscrafted.nutriplanner.controller.requestbody;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

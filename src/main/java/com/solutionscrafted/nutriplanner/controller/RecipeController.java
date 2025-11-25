@@ -1,5 +1,6 @@
 package com.solutionscrafted.nutriplanner.controller;
 
+import com.solutionscrafted.nutriplanner.controller.requestbody.RecipeRequestDto;
 import com.solutionscrafted.nutriplanner.dto.RecipeDto;
 import com.solutionscrafted.nutriplanner.service.RecipeService;
 import lombok.RequiredArgsConstructor;
@@ -33,11 +34,18 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<RecipeDto> createRecipe(@RequestBody RecipeDto request) {
+    public ResponseEntity<RecipeDto> createRecipe(@RequestBody RecipeRequestDto request) {
         log.info("Create recipe request: /recipes. Body: {}.", request);
 
         var recipe = recipeService.createRecipe(request);
         return ResponseEntity.created(URI.create(String.format("/recipes/%s", recipe.id())))
                 .body(recipe);
+    }
+
+    @PostMapping("/{recipe_id}")
+    public ResponseEntity<RecipeDto> updateRecipe(@PathVariable("recipe_id") Long recipeId, @RequestBody RecipeRequestDto requestDto) {
+        log.info("Update recipe request: /recipes/{}. Body: {}.", recipeId, requestDto);
+
+        return ResponseEntity.ok(recipeService.updateRecipe(recipeId, requestDto));
     }
 }

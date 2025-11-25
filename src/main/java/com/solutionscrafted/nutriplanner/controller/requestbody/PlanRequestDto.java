@@ -1,4 +1,4 @@
-package com.solutionscrafted.nutriplanner.dto;
+package com.solutionscrafted.nutriplanner.controller.requestbody;
 
 public record PlanRequestDto(
         String title,

@@ -1,11 +1,10 @@
-package com.solutionscrafted.nutriplanner.dto;
+package com.solutionscrafted.nutriplanner.controller.requestbody;
 
 import com.solutionscrafted.nutriplanner.entity.dayplan.MealTimeEnum;
 import lombok.Builder;
 
 @Builder
-public record RecipeDto(
-        Long id,
+public record RecipeRequestDto(
         String name,
         String instructions,
         Integer totalCalories,

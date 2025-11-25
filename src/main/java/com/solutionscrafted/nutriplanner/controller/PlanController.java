@@ -2,7 +2,7 @@ package com.solutionscrafted.nutriplanner.controller;
 
 import com.solutionscrafted.nutriplanner.dto.PdfResult;
 import com.solutionscrafted.nutriplanner.dto.PlanDto;
-import com.solutionscrafted.nutriplanner.dto.PlanRequestDto;
+import com.solutionscrafted.nutriplanner.controller.requestbody.PlanRequestDto;
 import com.solutionscrafted.nutriplanner.service.PdfService;
 import com.solutionscrafted.nutriplanner.service.PlanService;
 import lombok.RequiredArgsConstructor;

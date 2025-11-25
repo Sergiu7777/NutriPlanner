@@ -1,7 +1,7 @@
 package com.solutionscrafted.nutriplanner.controller;
 
 import com.solutionscrafted.nutriplanner.dto.IngredientDto;
-import com.solutionscrafted.nutriplanner.dto.IngredientRequestDto;
+import com.solutionscrafted.nutriplanner.controller.requestbody.IngredientRequestDto;
 import com.solutionscrafted.nutriplanner.service.IngredientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
