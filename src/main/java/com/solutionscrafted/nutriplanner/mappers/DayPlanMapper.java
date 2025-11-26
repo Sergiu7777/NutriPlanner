@@ -5,7 +5,7 @@ import com.solutionscrafted.nutriplanner.entity.dayplan.DayPlan;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring", uses = {
         DayPlanRecipeMapper.class,
@@ -18,7 +18,7 @@ public interface DayPlanMapper {
     @Mapping(source = "activities", target = "activities")
     DayPlanDto toDto(DayPlan dayPlan);
 
-    List<DayPlanDto> toDtoList(List<DayPlan> dayPlans);
+    Set<DayPlanDto> toDtoSet(Set<DayPlan> dayPlans);
 
     @Mapping(source = "planId", target = "plan.id")
     DayPlan toEntity(DayPlanDto dto);

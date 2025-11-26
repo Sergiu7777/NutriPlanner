@@ -8,12 +8,14 @@ import lombok.*;
 @Table(name = "day_plan_activity")
 @Getter
 @Setter
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class DayPlanActivity {
 
     @EmbeddedId
+    @EqualsAndHashCode.Include
     private DayPlanActivityId id;
 
     @ManyToOne(fetch = FetchType.LAZY)

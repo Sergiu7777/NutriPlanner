@@ -1,7 +1,7 @@
 package com.solutionscrafted.nutriplanner.mappers;
 
-import com.solutionscrafted.nutriplanner.dto.IngredientDto;
 import com.solutionscrafted.nutriplanner.controller.requestbody.IngredientRequestDto;
+import com.solutionscrafted.nutriplanner.dto.IngredientDto;
 import com.solutionscrafted.nutriplanner.entity.Ingredient;
 import org.mapstruct.Mapper;
 

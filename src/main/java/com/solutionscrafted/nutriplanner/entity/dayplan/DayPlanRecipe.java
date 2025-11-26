@@ -2,20 +2,21 @@ package com.solutionscrafted.nutriplanner.entity.dayplan;
 
 import com.solutionscrafted.nutriplanner.entity.Recipe;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "day_plan_recipe")
-@Data
+@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class DayPlanRecipe {
 
     @EmbeddedId
+    @EqualsAndHashCode.Include
     private DayPlanRecipeId id;
 
     @ManyToOne(fetch = FetchType.LAZY)

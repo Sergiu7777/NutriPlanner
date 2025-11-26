@@ -14,5 +14,5 @@ public interface DayPlanRecipeMapper {
     @Mapping(source = "id.recipeId", target = "recipeId")
     DayPlanRecipeDto toDto(DayPlanRecipe entity);
 
-    List<DayPlanRecipeDto> toDtoList(List<DayPlanRecipe> entities);
+    List<DayPlanRecipeDto> toDtoSet(List<DayPlanRecipe> entities);
 }

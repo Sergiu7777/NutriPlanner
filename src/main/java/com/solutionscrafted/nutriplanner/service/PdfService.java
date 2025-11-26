@@ -21,10 +21,8 @@ import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -295,7 +293,7 @@ public class PdfService {
         table.addCell(labelCell);
 
         for (DayPlan dayPlan : days) {
-            List<DayPlanActivity> activities = dayPlan.getActivities();
+            Set<DayPlanActivity> activities = dayPlan.getActivities();
 
             if (activities == null || activities.isEmpty()) {
                 PdfPCell cell = new PdfPCell(new Phrase("-"));

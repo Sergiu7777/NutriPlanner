@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -91,8 +92,8 @@ public class DayPlanService {
      * Get all day plans for a plan.
      */
     @Transactional(readOnly = true)
-    public List<DayPlanDto> getDayPlansByPlan(Long planId) {
-        return dpMapper.toDtoList(dayPlanRepository.findByPlanId(planId));
+    public Set<DayPlanDto> getDayPlansByPlan(Long planId) {
+        return dpMapper.toDtoSet(dayPlanRepository.findByPlanId(planId));
     }
 
     /**

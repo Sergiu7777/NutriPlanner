@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -26,7 +27,7 @@ public class DayPlanController {
     }
 
     @GetMapping("/{plan_id}/days")
-    public ResponseEntity<List<DayPlanDto>> getPlanDays(@PathVariable("plan_id") Long planId) {
+    public ResponseEntity<Set<DayPlanDto>> getPlanDays(@PathVariable("plan_id") Long planId) {
         log.info("Request get days from plan: /plans/day/{}.", planId);
 
         return ResponseEntity.ok(dayPlanService.getDayPlansByPlan(planId));

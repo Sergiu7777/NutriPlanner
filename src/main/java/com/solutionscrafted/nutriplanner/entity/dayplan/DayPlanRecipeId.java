@@ -9,10 +9,9 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class DayPlanRecipeId implements Serializable {
 
     @Column(name = "day_plan_id")
