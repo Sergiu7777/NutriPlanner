@@ -23,14 +23,10 @@ public class DayPlan {
 
     private String note;
 
-    //    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", nullable = false)
     private Plan plan;
 
-    //    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "dayPlan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DayPlanRecipe> recipes = new ArrayList<>();

@@ -1,9 +1,12 @@
 package com.solutionscrafted.nutriplanner.service;
 
+import com.solutionscrafted.nutriplanner.controller.requestbody.DayPlanRequestDto;
+import com.solutionscrafted.nutriplanner.dto.dayplan.DayPlanDto;
 import com.solutionscrafted.nutriplanner.entity.Plan;
 import com.solutionscrafted.nutriplanner.entity.Recipe;
 import com.solutionscrafted.nutriplanner.entity.SportActivity;
 import com.solutionscrafted.nutriplanner.entity.dayplan.*;
+import com.solutionscrafted.nutriplanner.mappers.DayPlanMapper;
 import com.solutionscrafted.nutriplanner.repository.PlanRepository;
 import com.solutionscrafted.nutriplanner.repository.RecipeRepository;
 import com.solutionscrafted.nutriplanner.repository.dayplan.DayPlanActivityRepository;
@@ -27,6 +30,7 @@ public class DayPlanService {
     private final RecipeRepository recipeRepository;
     private final DayPlanRecipeRepository dayPlanRecipeRepository;
     private final DayPlanActivityRepository dayPlanActivityRepository;
+    private final DayPlanMapper dpMapper;
 
     /**
      * Generate a full day plan structure (7-day or 14-day plan).
@@ -34,8 +38,7 @@ public class DayPlanService {
     @Transactional
     public List<DayPlan> generateDayPlans(Long planId, int days) {
 
-        Plan plan = planRepository.findById(planId)
-                .orElseThrow(() -> new RuntimeException("Plan not found: " + planId));
+        Plan plan = planRepository.findById(planId).orElseThrow(() -> new RuntimeException("Plan not found: " + planId));
 
         List<DayPlan> dayPlans = new ArrayList<>();
 
@@ -54,22 +57,15 @@ public class DayPlanService {
      * Add a recipe to a specific day and meal time.
      */
     @Transactional
-    public void addRecipeToDay(Long dayPlanId, Long recipeId, MealTimeEnum mealTime) {
+    public void addRecipeToDay(Long dayPlanId, Long recipeId) {
 
-        DayPlan dayPlan = dayPlanRepository.findById(dayPlanId)
-                .orElseThrow(() -> new RuntimeException("DayPlan not found: " + dayPlanId));
+        DayPlan dayPlan = dayPlanRepository.findById(dayPlanId).orElseThrow(() -> new RuntimeException("DayPlan not found: " + dayPlanId));
 
-        Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new RuntimeException("Recipe not found: " + recipeId));
+        Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(() -> new RuntimeException("Recipe not found: " + recipeId));
 
         DayPlanRecipeId id = new DayPlanRecipeId(dayPlanId, recipeId);
 
-        DayPlanRecipe dpr = DayPlanRecipe.builder()
-                .id(id)
-                .dayPlan(dayPlan)
-                .recipe(recipe)
-                .mealTime(mealTime)
-                .build();
+        DayPlanRecipe dpr = DayPlanRecipe.builder().id(id).dayPlan(dayPlan).recipe(recipe).mealTime(recipe.getMealTime()).build();
 
         dayPlanRecipeRepository.save(dpr);
     }
@@ -80,8 +76,7 @@ public class DayPlanService {
     @Transactional
     public void addActivityToDay(Long dayPlanId, Long activityId) {
 
-        DayPlan dayPlan = dayPlanRepository.findById(dayPlanId)
-                .orElseThrow(() -> new RuntimeException("DayPlan not found"));
+        DayPlan dayPlan = dayPlanRepository.findById(dayPlanId).orElseThrow(() -> new RuntimeException("DayPlan not found"));
 
         SportActivity activity = new SportActivity();
         activity.setId(activityId);
@@ -96,8 +91,8 @@ public class DayPlanService {
      * Get all day plans for a plan.
      */
     @Transactional(readOnly = true)
-    public List<DayPlan> getDayPlansByPlan(Long planId) {
-        return dayPlanRepository.findByPlanId(planId);
+    public List<DayPlanDto> getDayPlansByPlan(Long planId) {
+        return dpMapper.toDtoList(dayPlanRepository.findByPlanId(planId));
     }
 
     /**
@@ -106,6 +101,19 @@ public class DayPlanService {
     @Transactional
     public void deleteDayPlan(Long dayPlanId) {
         dayPlanRepository.deleteById(dayPlanId);
+    }
+
+    public DayPlanDto addOrUpdateDPNote(DayPlanRequestDto requestDto) {
+        DayPlan dayPlan = dayPlanRepository.findById(requestDto.id())
+                .orElseThrow(() -> new RuntimeException(String.format("DayPlan not found for id: %s", requestDto.id())));
+
+        if (!requestDto.note().equals(dayPlan.getNote())) {
+            dayPlan.setNote(requestDto.note());
+
+            return dpMapper.toDto(dayPlanRepository.save(dayPlan));
+        }
+
+        return dpMapper.toDto(dayPlan);
     }
 }
 

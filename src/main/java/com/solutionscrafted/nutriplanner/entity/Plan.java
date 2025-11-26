@@ -31,8 +31,6 @@ public class Plan {
     @Column(name = "date_created")
     private LocalDateTime dateCreated = LocalDateTime.now();
 
-    //    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;

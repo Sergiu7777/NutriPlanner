@@ -1,7 +1,8 @@
 package com.solutionscrafted.nutriplanner.controller;
 
+import com.solutionscrafted.nutriplanner.controller.requestbody.DayPlanRequestDto;
+import com.solutionscrafted.nutriplanner.dto.dayplan.DayPlanDto;
 import com.solutionscrafted.nutriplanner.entity.dayplan.DayPlan;
-import com.solutionscrafted.nutriplanner.entity.dayplan.MealTimeEnum;
 import com.solutionscrafted.nutriplanner.service.DayPlanService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,47 +13,59 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/plans/day")
+@RequestMapping("/plans")
 @RequiredArgsConstructor
 public class DayPlanController {
     private final DayPlanService dayPlanService;
 
-    @PostMapping("/{planId}/generate")
-    public ResponseEntity<List<DayPlan>> generateDayPlans(@PathVariable Long planId, @RequestParam(defaultValue = "7") int days) {
-        log.info("Generate plan days request: /plans/day/{}/generate.", days);
+    @PostMapping("/{plan_id}/days/generate")
+    public ResponseEntity<List<DayPlan>> generateDayPlans(@PathVariable("plan_id") Long planId, @RequestParam(defaultValue = "7") int days) {
+        log.info("Request generate plan days: /plans/day/{}/generate.", days);
 
         return ResponseEntity.ok(dayPlanService.generateDayPlans(planId, days));
     }
 
-    @GetMapping("/{planId}")
-    public ResponseEntity<List<DayPlan>> getPlanDays(@PathVariable Long planId) {
-        log.info("Get days from plan request: /plans/day/{}.", planId);
+    @GetMapping("/{plan_id}/days")
+    public ResponseEntity<List<DayPlanDto>> getPlanDays(@PathVariable("plan_id") Long planId) {
+        log.info("Request get days from plan: /plans/day/{}.", planId);
 
         return ResponseEntity.ok(dayPlanService.getDayPlansByPlan(planId));
     }
 
-    @PostMapping("/{dayPlanId}/recipe/{recipeId}")
-    public ResponseEntity<Void> addRecipe(@PathVariable Long dayPlanId, @PathVariable Long recipeId, @RequestParam MealTimeEnum mealTime) {
-        log.info("Add recipe for a specific day plan: /plans/day/{}/recipe/{}.", dayPlanId, recipeId);
+    @PostMapping("/{plan_id}/days/{dp_id}/recipe/{recipe_id}")
+    public ResponseEntity<Void> addRecipe(@PathVariable("plan_id") Long planId, @PathVariable("dp_id") Long dayPlanId, @PathVariable("recipe_id") Long recipeId) {
+        log.info("Request add recipe for a specific day plan: /plans/day/{}/recipe/{}.", dayPlanId, recipeId);
 
-        dayPlanService.addRecipeToDay(dayPlanId, recipeId, mealTime);
+        dayPlanService.addRecipeToDay(dayPlanId, recipeId);
+
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/{dayPlanId}/activity/{activityId}")
-    public ResponseEntity<Void> addActivity(@PathVariable Long dayPlanId, @PathVariable Long activityId) {
-        log.info("Add activity for day in plan: /plans/day/{}/activity/{}.", dayPlanId, activityId);
+    @PostMapping("/{plan_id}/days/{dp_id}/activity/{activity_id}")
+    public ResponseEntity<Void> addActivity(@PathVariable("plan_id") Long planId, @PathVariable("dp_id") Long dayPlanId, @PathVariable("activity_id") Long activityId) {
+        log.info("Request add activity for day in plan: /plans/day/{}/activity/{}.", dayPlanId, activityId);
 
         dayPlanService.addActivityToDay(dayPlanId, activityId);
+
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{dayPlanId}")
-    public ResponseEntity<Void> deleteDayPlan(@PathVariable Long dayPlanId) {
-        log.info("Delete day plan: /plans/day/{}.", dayPlanId);
+    @DeleteMapping("/{plan_id}/days/{dp_id}")
+    public ResponseEntity<Void> deleteDayPlan(@PathVariable("plan_id") Long planId, @PathVariable("dp_id") Long dayPlanId) {
+        log.info("Request delete day with id: {} from plan with id: {}.", planId, dayPlanId);
 
         dayPlanService.deleteDayPlan(dayPlanId);
+
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{plan_id}/days/{dp_id}/note")
+    public ResponseEntity<DayPlanDto> updateDPNote(@PathVariable("plan_id") Long planId, @PathVariable("dp_id") Long dayPlanId, @RequestBody DayPlanRequestDto requestDto) {
+        log.info("Request update day plan note: /plans/{}/days/{}/note.", planId, dayPlanId);
+
+        DayPlanDto dpUpdated = dayPlanService.addOrUpdateDPNote(requestDto);
+
+        return ResponseEntity.ok(dpUpdated);
     }
 }
 
