@@ -8,6 +8,7 @@ public record DayPlanRecipeDto(
         Long recipeId,
         MealTimeEnum mealTime,
         Double calories,
+        Double servings, //TODO: add serving size in plan, now it's only in pdf
         RecipeDto recipe
 ) {
 }

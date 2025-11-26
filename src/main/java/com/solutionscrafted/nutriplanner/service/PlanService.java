@@ -150,7 +150,6 @@ public class PlanService {
 
         adjustServingsToHitTarget(dayPlanRecipes, target);
 
-        // TODO: 1160 vs 2000 is too big difference - investigate - it's because of not much sample data in DB
         log.info("Total daily calories: {}, Requested daily intake: {}.", dayPlanRecipes.stream().mapToDouble(dpr -> dpr.getRecipe().getTotalCalories()).sum(), target);
 
         dayPlanRecipes.forEach(dpr -> {
@@ -184,7 +183,7 @@ public class PlanService {
                         .recipe(recipe)
                         .mealTime(mealTime)
                         .dayPlan(dayPlan)
-                        .servings(1.0) //TODO: sent servings in request - improvement
+                        .servings(1.0)
                         .build())
                 .toList();
 
@@ -198,9 +197,7 @@ public class PlanService {
         return totalCalories * intake / 100;
     }
 
-    //TODO: update servings
     private void adjustServingsToHitTarget(List<DayPlanRecipe> dayPlanRecipes, double targetCalories) {
-
         double currentTotal = dayPlanRecipes.stream()
                 .mapToDouble(dpr -> dpr.getRecipe().getTotalCalories())
                 .sum();
@@ -209,9 +206,8 @@ public class PlanService {
             return; // nothing to adjust
         }
 
-        double scale = targetCalories / currentTotal;
-
         // scale servings — default is assumed 1.0
+        double scale = Math.round(targetCalories / currentTotal * 10.0) / 10.0;
         dayPlanRecipes.forEach(dpr -> dpr.setServings(scale));
     }
 
