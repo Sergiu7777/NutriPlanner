@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS day_plan
     id      INTEGER PRIMARY KEY AUTOINCREMENT,
     day     INTEGER NOT NULL,
     note    TEXT,
+    total_calories REAL,
     plan_id INTEGER NOT NULL,
     CONSTRAINT fk_dayplan_plan FOREIGN KEY (plan_id) REFERENCES plans (id) ON DELETE CASCADE
 );

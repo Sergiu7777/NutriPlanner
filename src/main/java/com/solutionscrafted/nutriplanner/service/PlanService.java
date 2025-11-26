@@ -74,9 +74,12 @@ public class PlanService {
 
         Plan planSaved = planRepository.save(plan);
 
-        // 1. Calculate activity for each day;
-        // 2. Observation notes for each day;
-        // 3. DayPlan for each day, splitting the total kcal between breakfast, lunch dinner snack
+        // Calculate activity for each day;
+        // Observation notes for each day;
+        // DayPlan for each day, splitting the total kcal between breakfast, lunch dinner snack.
+        // Split kcal intake 30% breakfast, 40% lunch, 25% dinner, 5% snack
+        // Shuffle the recipes for each type of meal.
+        // Soup should not be available for breakfast!
         List<DayPlan> dayPlanList = new ArrayList<>();
         Integer days = requestDto.numberOfDays();
 
@@ -90,6 +93,9 @@ public class PlanService {
 
             assignDailyActivities(dayPlanSaved);
             assignDailyRecipes(dayPlanSaved, totalCalories, requestDto.excludeTag());
+
+            double total = calculateTotalCaloriesForDay(dayPlan);
+            dayPlan.setTotalCalories(total);
 
             dayPlanList.add(dayPlanSaved);
         }
@@ -207,6 +213,16 @@ public class PlanService {
 
         // scale servings — default is assumed 1.0
         dayPlanRecipes.forEach(dpr -> dpr.setServings(scale));
+    }
+
+    private double calculateTotalCaloriesForDay(DayPlan dayPlan) {
+        return dayPlan.getRecipes().stream()
+                .mapToDouble(dpr -> {
+                    Recipe recipe = dpr.getRecipe();
+                    double servings = dpr.getServings() != null ? dpr.getServings() : 1.0;
+                    return recipe.getTotalCalories() * servings;
+                })
+                .sum();
     }
 
 }

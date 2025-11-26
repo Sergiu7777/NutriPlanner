@@ -27,6 +27,9 @@ public class DayPlan {
 
     private String note;
 
+    @Column(name = "total_calories")
+    private Double totalCalories;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", nullable = false)
     private Plan plan;

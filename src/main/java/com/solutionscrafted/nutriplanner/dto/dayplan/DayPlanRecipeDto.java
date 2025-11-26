@@ -7,6 +7,7 @@ public record DayPlanRecipeDto(
         Long dayPlanId,
         Long recipeId,
         MealTimeEnum mealTime,
+        Double calories,
         RecipeDto recipe
 ) {
 }

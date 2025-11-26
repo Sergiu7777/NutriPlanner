@@ -29,13 +29,10 @@ public class Recipe {
     private String instructions;
 
     @Column(nullable = false)
-    private Integer totalCalories; //TODO: calculate calories
+    private Integer totalCalories;
 
     private String tags;
 
-    // Shuffle the recipes for each type of meal.
-    // Soup should not be available for breakfast!
-    // Split kcal intake 30% breakfast, 40% lunch, 25% dinner, 5% snack
     @Enumerated(EnumType.STRING)
     @Column(name = "meal_time", nullable = false)
     private MealTimeEnum mealTime;

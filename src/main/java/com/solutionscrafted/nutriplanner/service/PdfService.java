@@ -111,6 +111,7 @@ public class PdfService {
                 addMealRow(table, "Mic Dejun", weekSplit, MealTimeEnum.BREAKFAST);
                 addMealRow(table, "Prânz", weekSplit, MealTimeEnum.LUNCH);
                 addMealRow(table, "Cină", weekSplit, MealTimeEnum.DINNER);
+                addTotalCaloriesRow(table, weekSplit);
                 addActivitiesRow(table, weekSplit);
                 addNotesRow(table, weekSplit);
 
@@ -266,16 +267,34 @@ public class PdfService {
                 Recipe r = dpr.getRecipe();
                 if (r == null) continue;
 
-                double servings = dpr.getServings() != null ? dpr.getServings() : 1.0;
+                double servings = dpr.getServings() != null ? (Math.round(dpr.getServings() * 10.0) / 10.0) : 1.0;
                 double recipeCalories = (r.getTotalCalories() != null ? r.getTotalCalories() : 0.0) * servings;
                 totalMealCalories += recipeCalories;
 
-                sb.append(r.getName()).append(" (").append((int) recipeCalories).append(" kcal)").append("\n");
+                sb.append(servings).append("x ").append(r.getName()).append(" (").append((int) recipeCalories).append(" kcal)").append("\n");
             }
 
             sb.append("Total: ").append((int) totalMealCalories).append(" kcal");
 
             PdfPCell cell = new PdfPCell(new Phrase(sb.toString()));
+            cell.setPadding(5);
+            table.addCell(cell);
+        }
+    }
+
+    private void addTotalCaloriesRow(PdfPTable table, List<DayPlan> days) {
+
+        PdfPCell label = new PdfPCell(new Phrase("Total kcal"));
+        label.setBackgroundColor(new Color(230, 240, 250));
+        label.setPadding(6);
+        table.addCell(label);
+
+        for (DayPlan dp : days) {
+            String kcal = dp.getTotalCalories() != null
+                    ? dp.getTotalCalories().intValue() + " kcal"
+                    : "-";
+
+            PdfPCell cell = new PdfPCell(new Phrase(kcal));
             cell.setPadding(5);
             table.addCell(cell);
         }

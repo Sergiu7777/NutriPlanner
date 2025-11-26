@@ -10,6 +10,7 @@ public record DayPlanDto(
         Integer day,
         String note,
         Long planId,
+        Double totalCalories,
         List<DayPlanRecipeDto> recipes,
         List<DayPlanActivityDto> activities
 ) {
