@@ -8,8 +8,7 @@ VALUES ('PANCAKES PROTEICE CU IAURT, FRUCTE SI SIROP LIGHT',
        ('Orez cu pui', 'Fierbe orezul și prăjește pieptul de pui, apoi amestecă.', 520, 'proteic, echilibrat', 'LUNCH'),
        ('Omletă cu legume', 'Bate ouăle, adaugă broccoli și ulei de măsline.', 340, 'vegetarian', 'DINNER'),
        ('Hrisca cu pui', 'Fierbe hrisca și prăjește pieptul de pui, apoi amestecă.', 520, 'proteic, echilibrat',
-        'LUNCH'),
-       ('Omletă cu legume', 'Bate ouăle, adaugă broccoli și ulei de măsline.', 340, 'vegetarian', 'DINNER');
+        'LUNCH');
 
 -- Sample ingredients
 INSERT INTO ingredients_recipe (recipe_id, ingredient_id, quantity)
